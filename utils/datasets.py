@@ -184,8 +184,12 @@ class LoadImages:  # for inference
             # Read image
             self.count += 1
             img0 = cv2.imread(path)  # BGR
-            assert img0 is not None, 'Image Not Found ' + path
+            #assert img0 is not None, 'Image Not Found ' + path
+            if img0 is None:
+                logger.error('Image Not Found ' + path)
+                return path, None, None, self.cap
             #print(f'image {self.count}/{self.nf} {path}: ', end='')
+
 
         # Padded resize
         img = letterbox(img0, self.img_size, stride=self.stride)[0]
